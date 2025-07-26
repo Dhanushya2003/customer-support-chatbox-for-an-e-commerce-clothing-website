@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Support Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chatbox-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 320px;
+      max-height: 500px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+
+    .chatbox-header {
+      background-color: #ff4081;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chatbox-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 12px;
+    }
+
+    .message.user {
+      text-align: right;
+    }
+
+    .message.agent {
+      text-align: left;
+    }
+
+    .message span {
+      background-color: #e0e0e0;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 16px;
+      max-width: 80%;
+    }
+
+    .chatbox-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+
+    .chatbox-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+
+    .chatbox-input button {
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .chatbox-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Chat Toggle Button -->
+  <button class="chatbox-toggle" onclick="toggleChatbox()">💬</button>
+
+  <!-- Chatbox -->
+  <div class="chatbox-container" id="chatbox">
+    <div class="chatbox-header">Need Help? 👗</div>
+    <div class="chatbox-messages" id="messages"></div>
+    <div class="chatbox-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleChatbox() {
+      const chatbox = document.getElementById('chatbox');
+      chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (message === '') return;
+
+      addMessage('user', message);
+      input.value = '';
+
+      // Simulate a reply from agent
+      setTimeout(() => {
+        addMessage('agent', "Thanks for reaching out! We'll assist you shortly.");
+      }, 1000);
+    }
+
+    function addMessage(sender, text) {
+      const messages = document.getElementById('messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', sender);
+      const span = document.createElement('span');
+      span.textContent = text;
+      messageDiv.appendChild(span);
+      messages.appendChild(messageDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
